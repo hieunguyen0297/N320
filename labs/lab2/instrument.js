@@ -8,7 +8,7 @@ class Instrument {
 
     //Create method play for this class
     play(){
-        return `${this.family} ${this.verb} at ${this.loudness} loudness.`; 
+        console.log(this.family + " "+ this.verb + " at " + this.loudness + " loudness.");
     }
 }
 
@@ -56,5 +56,5 @@ instruments[2] = new String(0.4);
 
 //Loop through the array and call play method
 for(let i = 0; i < instruments.length; i++){
-    console.log(instruments[i].play());
+    instruments[i].play();
 }
