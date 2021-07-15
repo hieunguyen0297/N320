@@ -1,0 +1,25 @@
+.blackBox {
+	width: 700px;
+	height: 100px;
+	background-color: black;
+}
+
+.purpleBox {
+	width: 200px;
+	height: 80px;
+	background-color: rgb(154, 104, 200);
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 50px;
+	color: rgb(238, 209, 172);
+}
+
+.grid {
+	display: grid;
+	padding: 20px 12px;
+	width: 700px;
+	grid-template-columns: repeat(3, 1fr);
+	grid-row-gap: 20px;
+}
