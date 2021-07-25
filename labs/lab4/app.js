@@ -7,7 +7,7 @@ for(let i = 0; i < purpleBox.length; i++){
 
     purpleBox[i].addEventListener("mouseover", (event) => {
         event.target.innerHTML = i + 1;
-        gsap.to(purpleBox[i], {duration: 0.7, rotation: 4,scale: 1.1});
+        gsap.to(purpleBox[i], {duration: 0.7, rotation: 3,scale: 1.1});
         gsap.to(purpleBox[i], { backgroundColor: "#6732d1"});
     })
 
