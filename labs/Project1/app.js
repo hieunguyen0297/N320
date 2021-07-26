@@ -78,22 +78,21 @@ class GameBoard {
                 if(this.currentPlayer == this.playerRed){
                     this.gameBoard[row][column].classList.remove("empty");
                     this.gameBoard[row][column].setAttribute("fill", "#d92555");
-                    this.gameBoard[row][column].setAttribute("token", this.token(this.playerRed));
-                    this.checkHorizontally(row, column);  
-                    this.checkVertically(row, column);
-                    this.currentPlayer = this.playerGreen;       
-                     
+                    this.gameBoard[row][column].setAttribute("token", this.token(this.playerRed));                   
+                    this.currentPlayer = this.playerGreen;              
                     gsap.from(`.Row${row}-Col${column}`, {y: "random(-120, 100)", alpha: 0, ease: "bounce.out", duration: 0.7})
                 }else{
                     this.gameBoard[row][column].classList.remove("empty");
                     this.gameBoard[row][column].setAttribute("fill", "#25d99a");
                     this.gameBoard[row][column].setAttribute("token", this.token(this.playerGreen));
-                    this.checkHorizontally(row, column);  
-                    this.checkVertically(row, column);
                     this.currentPlayer = this.playerRed;
                     gsap.from(`.Row${row}-Col${column}`, {y: "random(-50, 50)", alpha: 0, ease: "bounce.out", duration: 0.7})
                 }
               
+                this.checkHorizontally(row, column);  
+                this.checkVertically(row, column);
+                this.checkDiagonally(this.gameBoard, row, column);
+
                 break;   
 
             }   
@@ -190,6 +189,81 @@ class GameBoard {
             }
         }
         
+    }
+
+    //check diagnally to see who win
+    checkDiagonally(board, row, col){
+        if(col ==3 && row <=2 ){
+            
+            if( board[row][col].getAttribute("token") == board[row+1][col+1].getAttribute("token") && board[row][col].getAttribute("token") == board[row+2][col+2].getAttribute("token") && board[row][col].getAttribute("token") == board[row+3][col+3].getAttribute("token")){
+                this.playerWon = `${board[row][col].getAttribute("token")} won`;
+                this.changeWinnerAppearance(board, row, col);
+                this.changeWinnerAppearance(board, row + 1, col + 1);
+                this.changeWinnerAppearance(board, row + 2, col + 2);
+                this.changeWinnerAppearance(board, row + 3, col + 3);
+
+            }else if(board[row][col].getAttribute("token") == board[row+1][col-1].getAttribute("token") && board[row][col].getAttribute("token") == board[row+2][col-2].getAttribute("token") && board[row][col].getAttribute("token") == board[row+3][col-3].getAttribute("token")){
+                this.playerWon = `${board[row][col].getAttribute("token")} won`;
+                this.changeWinnerAppearance(board, row, col);
+                this.changeWinnerAppearance(board, row + 1, col - 1);
+                this.changeWinnerAppearance(board, row + 2, col - 2);
+                this.changeWinnerAppearance(board, row + 3, col - 3);
+            }
+            
+        }else if(col < 3 && row <= 2){
+            if( board[row][col].getAttribute("token") == board[row+1][col+1].getAttribute("token") && board[row][col].getAttribute("token") == board[row+2][col+2].getAttribute("token") && board[row][col].getAttribute("token") == board[row+3][col+3].getAttribute("token")){
+                this.playerWon = `${board[row][col].getAttribute("token")} won`;
+                this.changeWinnerAppearance(board, row, col);
+                this.changeWinnerAppearance(board, row + 1, col + 1);
+                this.changeWinnerAppearance(board, row + 2, col + 2);
+                this.changeWinnerAppearance(board, row + 3, col + 3);
+
+            }
+        }else if(col> 3 && row <= 2){
+            if(board[row][col].getAttribute("token") == board[row+1][col-1].getAttribute("token") && board[row][col].getAttribute("token") == board[row+2][col-2].getAttribute("token") && board[row][col].getAttribute("token") == board[row+3][col-3].getAttribute("token")){
+                this.playerWon = `${board[row][col].getAttribute("token")} won`;
+                this.changeWinnerAppearance(board, row, col);
+                this.changeWinnerAppearance(board, row + 1, col - 1);
+                this.changeWinnerAppearance(board, row + 2, col - 2);
+                this.changeWinnerAppearance(board, row + 3, col - 3);
+            }
+        }else if((col ==3 && row > 2)){
+            if( board[row][col].getAttribute("token") == board[row-1][col+1].getAttribute("token") && board[row][col].getAttribute("token") == board[row-2][col+2].getAttribute("token") && board[row][col].getAttribute("token") == board[row-3][col+3].getAttribute("token")){
+                this.playerWon = `${board[row][col].getAttribute("token")} won`;
+                this.changeWinnerAppearance(board, row, col);
+                this.changeWinnerAppearance(board, row - 1, col + 1);
+                this.changeWinnerAppearance(board, row - 2, col + 2);
+                this.changeWinnerAppearance(board, row - 3, col + 3);
+
+            }else {
+                if( board[row][col].getAttribute("token") == board[row-1][col-1].getAttribute("token") && board[row][col].getAttribute("token") == board[row-2][col-2].getAttribute("token") && board[row][col].getAttribute("token") == board[row-3][col-3].getAttribute("token")){
+                    this.playerWon = `${board[row][col].getAttribute("token")} won`;
+                    this.changeWinnerAppearance(board, row, col);
+                    this.changeWinnerAppearance(board, row - 1, col - 1);
+                    this.changeWinnerAppearance(board, row - 2, col - 2);
+                    this.changeWinnerAppearance(board, row - 3, col - 3);
+    
+                }
+            }
+        }else if(col > 3 && row > 2) {
+            if( board[row][col].getAttribute("token") == board[row-1][col-1].getAttribute("token") && board[row][col].getAttribute("token") == board[row-2][col-2].getAttribute("token") && board[row][col].getAttribute("token") == board[row-3][col-3].getAttribute("token")){
+                this.playerWon = `${board[row][col].getAttribute("token")} won`;
+                this.changeWinnerAppearance(board, row, col);
+                this.changeWinnerAppearance(board, row - 1, col - 1);
+                this.changeWinnerAppearance(board, row - 2, col - 2);
+                this.changeWinnerAppearance(board, row - 3, col - 3);
+
+            }
+        }else if(col < 3 && row > 2){
+            if( board[row][col].getAttribute("token") == board[row-1][col+1].getAttribute("token") && board[row][col].getAttribute("token") == board[row-2][col+2].getAttribute("token") && board[row][col].getAttribute("token") == board[row-3][col+3].getAttribute("token")){
+                this.playerWon = `${board[row][col].getAttribute("token")} won`;
+                this.changeWinnerAppearance(board, row, col);
+                this.changeWinnerAppearance(board, row - 1, col + 1);
+                this.changeWinnerAppearance(board, row - 2, col + 2);
+                this.changeWinnerAppearance(board, row - 3, col + 3);
+
+            }
+        }
     }
 
 
